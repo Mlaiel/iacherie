@@ -150,7 +150,8 @@ async def cleanup_all_managers() -> bool:
     
     Returns:
         bool: True if all managers cleaned up successfully
-    """    try:
+    """
+    try:
         managers = list(_MANAGER_REGISTRY.values())
         
         # Cleanup all managers concurrently
